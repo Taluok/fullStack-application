@@ -1,29 +1,43 @@
-import express from 'express'
-import dotenv from "dotenv"
-import mongoose from "mongoose"
+import express from 'express';
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import authRoute from "./routes/auth.js";
+import usersRoute from "./routes/users.js";
+import hotelsRoute from "./routes/hotels.js";
+import roomsRoute from "./routes/rooms.js";
 
-dotenv.config()
+dotenv.config();
+const app = express();
+const PORT = 8800;
+const MONGO = process.env.MONGO;
 
 const connect = async () => {
-    try { 
-        await mongoose.connect(process.env.MONGO);
-        console.log("Connected to MongoDB!")
-    }catch (error){
-        throw(error)
+    try {
+        await mongoose.connect(MONGO);
+        console.log("Connected to MongoDB!");
+    } catch (error) {
+        console.error("Error connecting to MongoDB:", error);
+        process.exit(1);
     }
-}
+};
 
-mongoose.connection.on("disconected", ()=>{
-    console.log("mongoDB disconnected!")
-})
+mongoose.connection.on("disconnected", () => {
+    console.log("MongoDB disconnected!");
+});
 
-mongoose.connection.on("connected", ()=>{
-    console.log("mongoDB connected!")
-})
+// Middlewares
+const authMiddleware = "/auth";
+const usersMiddleware = "/users";
+const hotelsMiddleware = "/hotels";
+const roomsMiddleware = "/rooms";
 
-const app = express()
+app.use(authMiddleware, authRoute);
+app.use(usersMiddleware, usersRoute);
+app.use(hotelsMiddleware, hotelsRoute);
+app.use(roomsMiddleware, roomsRoute);
 
-app.listen(8800, ()=>{
-    connect()
-    console.log("Connected to backend!")
-})
+app.listen(PORT, () => {
+    connect();
+    console.log(`Connected to backend on port ${PORT}`);
+});
+

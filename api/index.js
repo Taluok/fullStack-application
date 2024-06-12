@@ -26,18 +26,16 @@ mongoose.connection.on("disconnected", () => {
 });
 
 // Middlewares
-const authMiddleware = "/auth";
-const usersMiddleware = "/users";
-const hotelsMiddleware = "/hotels";
-const roomsMiddleware = "/rooms";
+app.use(express.json());
 
-app.use(authMiddleware, authRoute);
-app.use(usersMiddleware, usersRoute);
-app.use(hotelsMiddleware, hotelsRoute);
-app.use(roomsMiddleware, roomsRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoute);
+app.use("/api/hotels", hotelsRoute);
+app.use("/api/rooms", roomsRoute);
 
 app.listen(PORT, () => {
     connect();
     console.log(`Connected to backend on port ${PORT}`);
 });
+
 

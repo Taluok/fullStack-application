@@ -23,7 +23,7 @@
 
 .siTitle {
     font-size: 20px;
-    color: #0071c2;
+    color: #297a52;
 }
 
 .siDistance {
@@ -76,7 +76,7 @@
 }
 
 .siRating>button {
-    background-color: #003580;
+    background-color: #297a52;
     color: white;
     padding: 5px;
     font-weight: bold;
@@ -100,7 +100,7 @@
 }
 
 .siCheckButton {
-    background-color: #0071c2;
+    background-color: #297a52;
     color: white;
     font-weight: bold;
     padding: 10px 5px;
